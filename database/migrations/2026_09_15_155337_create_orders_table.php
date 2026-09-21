@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("manager_id")->nullable()->constrained("users");
             $table->foreignId("inspector_id")->nullable()->constrained("users");
-            $table->foreignId("car_id")->constrained("car")->onDelete("restrict");
+            $table->foreignId("car_id")->constrained("cars")->onDelete("restrict");
             $table->foreignId("user_id")->constrained("users")->onDelete("restrict");
             $table->date("start_date");
             $table->date("end_date");

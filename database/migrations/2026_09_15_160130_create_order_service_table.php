@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_service', function (Blueprint $table) {
+        Schema::create('order_services', function (Blueprint $table) {
             $table->id();
             $table->foreignId("order_id")->constrained("orders")->onDelete("cascade");
-            $table->foreignId("service_id")->constrained("additional_service");
+            $table->foreignId("service_id")->constrained("additional_services");
             $table->integer("quantity")->default(1);
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_service');
+        Schema::dropIfExists('order_services');
     }
 };
