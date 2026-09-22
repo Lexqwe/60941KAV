@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdditionalServiceController;
+use App\Http\Controllers\CarController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +19,10 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 Route::get('/orders', [OrderController::class, 'index']);
 Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::get('/services/{id}', [AdditionalServiceController::class, 'show']);
+
+Route::get('/cars', [CarController::class, 'index']);
+Route::get('/car/create', [CarController::class, 'create']);
+Route::post('/car', [CarController::class, 'store']);
+Route::get('/car/edit/{id}', [CarController::class, 'edit']);
+Route::post('/car/update/{id}', [CarController::class, 'update']);
+Route::get('/car/destroy/{id}', [CarController::class, 'destroy']);
