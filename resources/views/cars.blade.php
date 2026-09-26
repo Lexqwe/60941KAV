@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>609-41</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style> .is-invalid { color: red; } </style>
 </head>
 <body>
@@ -44,5 +45,7 @@
     @endforeach
     </tbody>
 </table>
+{{ $cars->links() }}
+
 </body>
 </html>

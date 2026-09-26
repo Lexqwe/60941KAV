@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('cars',[
-            'cars' => Car::all()
+        $perpage = $request->perpage ?? 2;
+        return view('cars', [
+            'cars' => Car::paginate($perpage)->withQueryString()
         ]);
     }
 
