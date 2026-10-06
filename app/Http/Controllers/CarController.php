@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use Illuminate\Support\Facades\Gate;
+
 class CarController extends Controller
 {
     public function index(Request $request)
@@ -60,6 +62,10 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
+        if (!Gate::allows('edit-car', Car::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message', 'У вас нет разрешения на редактирование машины номер ' . $id);
+        }
+
         return view('car_edit', [
             'car' => Car::all()->where('id', '=', $id)->first(),
             'categories' => Category::all()
@@ -93,6 +99,10 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!Gate::allows('destroy-car', Car::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message', 'У вас нет разрешения на удаление машины номер ' . $id);
+        }
+
         Car::destroy($id);
         return redirect('/cars');
     }
