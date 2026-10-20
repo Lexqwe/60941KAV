@@ -45,7 +45,7 @@ class CarController extends Controller
 
         Car::create($validated);
 
-        return redirect('/cars');
+        return redirect('/cars')->withErrors(['success' => 'Машина успешно добавлена.']);
     }
 
 
@@ -62,8 +62,14 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
+        $car = Car::all()->where('id', '=', $id)->first();
+
+        if (!$car) {
+            return redirect('/cars')->withErrors(['error' => 'Машина не найдена.']);
+        }
+
         if (!Gate::allows('edit-car', Car::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message', 'У вас нет разрешения на редактирование машины номер ' . $id);
+            return redirect('/cars')->withErrors(['error' => 'У вас нет разрешения на редактирование машины номер ' . $id]);
         }
 
         return view('car_edit', [
@@ -91,7 +97,7 @@ class CarController extends Controller
         $car = Car::all()->where('id', '=', $id)->first();
         $car->update($validated);
 
-        return redirect('/cars');
+        return redirect('/cars')->withErrors(['success' => 'Машина успешно обновлена.']);
     }
 
     /**
@@ -99,11 +105,17 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
+        $car = Car::all()->where('id', '=', $id)->first();
+        if (!$car) {
+            return redirect('/cars')->withErrors(['error' => 'Машина не найдена.']);
+        }
+
         if (!Gate::allows('destroy-car', Car::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message', 'У вас нет разрешения на удаление машины номер ' . $id);
+            return redirect('/cars')->withErrors(['error' => 'У вас нет разрешения на удаление машины номер ' . $id]);
         }
 
         Car::destroy($id);
-        return redirect('/cars');
+
+        return redirect('/cars')->withErrors(['success' => 'Машина успешно удалена.']);
     }
 }

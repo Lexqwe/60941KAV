@@ -8,7 +8,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
 
 Route::get('/hello', function () {
@@ -31,4 +31,4 @@ Route::get('/car/destroy/{id}', [CarController::class, 'destroy'])->middleware('
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/auth', [LoginController::class, 'authenticate']);
-Route::get('/error', function () {return view('error', ['message' => session('message')]);});
+//Route::get('/error', function () {return view('error', ['message' => session('message')]);});
